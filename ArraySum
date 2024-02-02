@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ArraySum {
+    function sumArray(uint256[] memory numbers) public pure returns (uint256 total) {
+        assembly {
+            total := 0 // Initialize the total sum to zero
+
+            // Iterate through the array
+            for { let i := 0 } lt(i, arraylength(numbers)) { i := add(i, 1) } {
+                // Load the current element from the array
+                let element := mload(add(numbers, mul(add(i, 1), 0x20)))
+
+                // Add the element to the total sum
+                total := add(total, element)
+            }
+        }
+    }
+}
