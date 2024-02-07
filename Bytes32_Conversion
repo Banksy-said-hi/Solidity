@@ -1,0 +1,44 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ConvertToBytes32 {
+    // Function to convert an unsigned integer to bytes32
+    function uintToBytes32(uint256 value) public pure returns (bytes32) {
+        return bytes32(value);
+    }
+
+    // Function to convert a string to bytes32
+    // Note: This function assumes the string is 32 bytes or less.
+    // Longer strings will be truncated.
+    function stringToBytes32(string memory source) public pure returns (bytes32 result) {
+        // Check if the string is shorter than 32 bytes
+        if (bytes(source).length == 0) {
+            return 0x0;
+        }
+        
+        // Padding the right side of the string with 0s
+        assembly {
+            result := mload(add(source, 32))
+        }
+    }
+
+    // Example function to demonstrate truncation of strings longer than 32 bytes
+    function stringToBytes32Truncated(string memory source) public pure returns (bytes32 result) {
+        bytes memory tempEmptyStringTest = bytes(source);
+        if (tempEmptyStringTest.length == 0) {
+            return 0x0;
+        } else if (tempEmptyStringTest.length > 32) {
+            // If the string is longer than 32 bytes, it will be truncated
+            bytes32 tempResult;
+            assembly {
+                tempResult := mload(add(source, 32))
+            }
+            return tempResult;
+        } else {
+            // If the string is 32 bytes or shorter, it behaves the same as stringToBytes32
+            assembly {
+                result := mload(add(source, 32))
+            }
+        }
+    }
+}
