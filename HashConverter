@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract HashConverter {
+    // Function to convert a string to its keccak256 hash
+    function stringToHash(string memory _str) public pure returns(bytes32) {
+        return keccak256(abi.encodePacked(_str));
+    }
+
+    // Function to convert an integer to its keccak256 hash
+    function intToHash(uint _int) public pure returns(bytes32) {
+        return keccak256(abi.encodePacked(_int));
+    }
+}
