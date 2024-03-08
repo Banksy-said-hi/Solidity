@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract EncodeDemo {
+    // Function using abi.encode
+    // Returns the encoded result as bytes
+    function encodeInputs(uint256 _number, string memory _text) public pure returns (bytes memory) {
+        return abi.encode(_number, _text);
+    }
+
+    // Function using abi.encodePacked
+    // Returns the encoded result as bytes
+    function encodePackedInputs(uint256 _number, string memory _text) public pure returns (bytes memory) {
+        return abi.encodePacked(_number, _text);
+    }
+
+    // Optionally, for comparing the hash results of the encoded inputs
+    function hashEncodedInputs(uint256 _number, string memory _text) public pure returns (bytes32, bytes32) {
+        bytes memory encoded = abi.encode(_number, _text);
+        bytes memory encodedPacked = abi.encodePacked(_number, _text);
+        return (keccak256(encoded), keccak256(encodedPacked));
+    }
+}
