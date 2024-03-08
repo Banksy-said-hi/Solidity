@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract EncodingDecodingExample {
+    // Example function that encodes a uint and a string
+    function encodeValues(uint _number, string memory _text) public pure returns (bytes memory) {
+        return abi.encode(_number, _text);
+    }
+
+    // Corresponding function to decode the encoded values
+    function decodeValues(bytes memory encodedData) public pure returns (uint number, string memory text) {
+        (number, text) = abi.decode(encodedData, (uint, string));
+    }
+}
